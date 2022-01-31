@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<title>Admin {{username}}</title>
+</head>
+<body>
+	<div>
+		<h3>{{username}}  <a href="/admin/connected/logout">Log out</a></h3>
+	</div>
+	{{#if error}}
+		<h3>{{message}}</h3>
+	{{/if}}
+	
+
+	<div>
+		{{#if form}}
+			<form method="post" action="/admin/connected/requestSecuence">
+
+				{{#each terminos}}
+					<input type="number" name="term" style="margin:0px" size="5" maxlength="100">
+					<i>,</i>
+				{{/each}}
+				<i>.  .  .  .  .</i>
+				<br>
+				<input type="hidden" name="terms" value="{{terms}}">
+				<button style="margin:10px" type="submit">Send secuence</button>
+			</form>
+			<a href="../connected">Change secuence size</a>
+		{{else}}
+			<form method="get" action="/admin/connected/createSecuence">
+				<input type="number" name="terms" placeholder="number of terms" max="15" min="4" size="20">
+				<button type="submit">Next</button>
+			</form>
+		{{/if}}
+			
+		<br>
+		<div class="overflow-auto " style="height:40vh;width:70vw">
+			<table class="table table-sm ">
+				<thead>
+					<th>Id</th>
+					<th>Name of requester</th>
+					<th>Secuence</th>
+					<th>Solution</th>
+				</thead>
+				<tbody>
+					{{#each secuenceLog}}
+						<tr>
+							<td>{{secuence_id}}</td>
+							<td>{{requester}}</td>
+							<td>{{secuence}}</td>
+							{{#if_defined solution}}
+							<td>{{solution}}</td>
+							<td></td>
+							{{else}}
+
+							<td>Not solved yet</td>
+							<td><form method="get" action="/admin/solve">
+								<input type="hidden" name="secuence" value="{{secuence}}">
+								<button type="submit">Solve</button>
+							</form></td>
+							{{/if_defined}}
+							<td>
+								<form method="post" action="/admin/connected/delete">
+									<input type="hidden" name="secuence" value="{{secuence}}">
+									<button type="submit">Delete</button>
+								</form>
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table >
+		</div>
+		<br>
+		<h4><a href="./makeAdmin">view admins</a></h4>
+		<br>
+		<div class="overflow-auto " style="height:40vh;width:80vw" >
+			<table class="table table-sm table-bordered"  >
+			<caption align="top">Logs</caption>
+			<thead class="sticky-top bg-info">
+				<th>time</th>
+				<th>ip</th>
+				<th>username</th>
+				<th>change</th>
+			</thead>
+			<tbody class="bg-dark text-light">
+				{{#each changelog}}
+				<tr>
+					<td>{{time}}</td>
+					<td>{{ip}}</td>
+					<td>{{username}}</td>
+					<td>{{changes}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		</div>
+		
+	</div>
+</body>
+</html>

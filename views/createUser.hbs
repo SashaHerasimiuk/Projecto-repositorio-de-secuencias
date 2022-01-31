@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create user</title>
+</head>
+<body>
+	<div>
+		<form method="post" action="/createUser">
+			<div>
+				<input type="text" name="username" placeholder="Username">
+			</div>
+			<div>
+				<input type="password" name="password" placeholder="Password">
+			</div>
+			<div>
+				<input type="email" name="email" placeholder="Email">
+			</div>
+			<button type="submit">Create</button>
+		</form>
+		{{#if error}}
+		<h3>{{message}}</h3>
+		{{/if}}
+	</div>
+</body>
+</html>

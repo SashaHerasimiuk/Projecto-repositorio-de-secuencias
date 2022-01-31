@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<title>Solve {{secuence}}</title>
+</head>
+<body>
+	<h3>{{secuence}}</h3>
+	<form method="post" action="/admin/solve/solve">
+		<textarea name="solution">f(x)=</textarea>
+		<br>
+		<button type="submit">Send</button>
+	</form>
+	<br>
+	<thead>
+		<th>name of solver</th>
+		<th>solution</th>
+	</thead>
+	<tbody>
+		{{#each log}}
+		<br>
+			<tr>
+				<td style="margin:10px">{{requester}}</td>
+				<td style="margin:10px">{{solveTry}}</td>
+				<td>
+					<form action="/admin/solve/solution" method="post">
+						<input type="hidden" name="solution" value="{{solveTry}}">
+						<input type="hidden" name="secuence" value="{{secuence}}">
+						<button type="submit">select solution</button>
+					</form>
+				</td>
+			</tr>
+			
+		{{/each}}
+	</tbody>
+	{{#if error}}
+
+		<h4>error: {{message}}</h4>
+	{{/if}}
+</body>
+</html>
