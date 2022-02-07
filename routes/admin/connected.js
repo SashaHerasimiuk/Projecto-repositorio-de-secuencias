@@ -70,9 +70,10 @@ router.post('/requestSecuence', async function(req, res, next){
 	if (error) {
 		var secuenceLog = await secuences.getSecuences();
 		var form = false;
+		var changelog = await logs.getLogs();
 		await logs.createLog(ip, req.session.username,'sended an empty secuence');
 		res.render('admin/connected',{
-
+			changelog,
 			username:req.session.username,
 			secuenceLog,
 			form,
