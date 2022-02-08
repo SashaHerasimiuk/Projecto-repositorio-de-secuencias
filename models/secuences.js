@@ -1,9 +1,9 @@
 var pool = require('./dataBase');
 
-async function createSecuence(name, secuence){
+async function createSecuence(name, secuence, description){
 	try{ 
-		var query = 'insert into secuences (requester, secuence) values (?, ?)';
-		var rows = await pool.query(query,[name, secuence]);
+		var query = 'insert into secuences (requester, secuence, description) values (?, ?, ?)';
+		var rows = await pool.query(query,[name, secuence, description]);
 		return false;
 	}catch (error){
 		console.log(error);

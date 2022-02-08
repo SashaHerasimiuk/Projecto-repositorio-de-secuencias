@@ -14,6 +14,9 @@ var body = require('body-parser');
 var jsonParser = body.json();
 var urlencoded = body.urlencoded({extended:false});
 
+var fileUpload = require('express-fileupload');
+
+
 var handlebars = require('hbs');
 
 var app = express();
@@ -66,6 +69,19 @@ handlebars.registerHelper('if_defined', function(a, opt){
     return opt.inverse(this);
   }
 });
+
+handlebars.registerHelper('if_nonull', function(a, b){
+  if (a == ''){
+    return b.inverse(this);
+  }else{
+    return b.fn(this);
+  }
+})
+
+app.use(fileUpload({
+  useTempFiles:true,
+  temFileDir:'/tmp/'
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

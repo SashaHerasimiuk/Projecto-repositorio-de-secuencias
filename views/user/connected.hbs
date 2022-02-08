@@ -23,9 +23,11 @@
 				<i>.  .  .  .  .</i>
 				<br>
 				<input type="hidden" name="terms" value="{{terms}}">
+				<textarea name="description" placeholder="Descripcion de la secuencia"></textarea>	
 				<button style="margin:10px" type="submit">Send secuence</button>
 			</form>
 			<a href="../connected">Change secuence size</a>
+
 		{{else}}
 			<form method="get" action="/user/connected/createSecuence">
 				<input type="number" name="terms" placeholder="number of terms" max="15" min="4" size="20">
@@ -39,6 +41,7 @@
 					<th>Id</th>
 					<th>Name of requester</th>
 					<th>Secuence</th>
+					<th>Description</th>
 					<th>Solution</th>
 				</thead>
 				<tbody>
@@ -47,6 +50,11 @@
 							<td>{{secuence_id}}</td>
 							<td>{{requester}}</td>
 							<td>{{secuence}}</td>
+							{{#if_nonull description}}
+								<td>{{description}}</td>
+							{{else}}
+								<td>No description provided</td>
+							{{/if_nonull}}
 							{{#if_defined solution}}
 							<td>{{solution}}</td>
 							{{else}}

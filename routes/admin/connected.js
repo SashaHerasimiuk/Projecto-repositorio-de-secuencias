@@ -59,9 +59,10 @@ router.post('/delete', async function(req, res, next){
 })
 
 router.post('/requestSecuence', async function(req, res, next){
-	var toJoin = [];
+	var toJoin = req.body.term;
 	var terms = req.body.terms;
-	toJoin = req.body.term;
+	var error = false
+	var description = req.body.description;
 	for (var i = 0; i < toJoin.length ; i++){
 		if (toJoin[i] == '') {
 			error = true;
@@ -71,7 +72,7 @@ router.post('/requestSecuence', async function(req, res, next){
 		var secuenceLog = await secuences.getSecuences();
 		var form = false;
 		var changelog = await logs.getLogs();
-		await logs.createLog(ip, req.session.username,'sended an empty secuence');
+		await logs.createLog(ip, req.session.username,'sent an empty secuence');
 		res.render('admin/connected',{
 			changelog,
 			username:req.session.username,
@@ -84,7 +85,7 @@ router.post('/requestSecuence', async function(req, res, next){
 		var secuence = toJoin.join();
 		if (secuence != '') {
 			await logs.createLog(ip,req.session.username,'requested secuence '+ secuence);
-			if (await secuences.createSecuence(req.session.username, secuence)) {
+			if (await secuences.createSecuence(req.session.username, secuence, description)) {
 				var secuenceLog = await secuences.getSecuences();
 				var changelog = await logs.getLogs();
 				var form = false;
